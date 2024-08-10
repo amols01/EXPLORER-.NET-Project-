@@ -1,0 +1,249 @@
+@Bhatkanti_HostAddress = http://localhost:5143
+
+
+GET {{Bhatkanti_HostAddress}}/User
+Accept: application/json
+
+#### Get user by ID
+GET {{Bhatkanti_HostAddress}}/User/Details/1
+Accept: application/json
+
+#### Create new user
+POST {{Bhatkanti_HostAddress}}/User/Create
+Content-Type: application/x-www-form-urlencoded
+
+Name=John Doe&Email=johndoe@example.com&Password=securepassword&PhoneNumber=1234567890&City=City&Country=Country&DOB=2000-01-01
+
+#### Edit user
+PUT {{Bhatkanti_HostAddress}}/User/Edit/1
+Content-Type: application/x-www-form-urlencoded
+
+Name=Jane Doe&Email=janedoe@example.com&Password=newpassword&PhoneNumber=0987654321&City=NewCity&Country=NewCountry&DOB=1999-12-31
+
+#### Delete user
+DELETE {{Bhatkanti_HostAddress}}/User/DeleteConfirmed/1
+
+### Roles API
+
+#### Get all roles
+GET {{Bhatkanti_HostAddress}}/Roles
+Accept: application/json
+
+#### Get role by ID
+GET {{Bhatkanti_HostAddress}}/Roles/Details/1
+Accept: application/json
+
+#### Create new role
+POST {{Bhatkanti_HostAddress}}/Roles/Create
+Content-Type: application/x-www-form-urlencoded
+
+Name=Admin&Description=Administrator role
+
+#### Edit role
+PUT {{Bhatkanti_HostAddress}}/Roles/Edit/1
+Content-Type: application/x-www-form-urlencoded
+
+Name=User&Description=User role
+
+#### Delete role
+DELETE {{Bhatkanti_HostAddress}}/Roles/DeleteConfirmed/1
+
+### Cities API
+
+#### Get all cities
+GET {{Bhatkanti_HostAddress}}/Cities
+Accept: application/json
+
+#### Get city by ID
+GET {{Bhatkanti_HostAddress}}/Cities/Details/1
+Accept: application/json
+
+#### Create new city
+POST {{Bhatkanti_HostAddress}}/Cities/Create
+Content-Type: application/x-www-form-urlencoded
+
+Name=CityName&StateID=1
+
+#### Edit city
+PUT {{Bhatkanti_HostAddress}}/Cities/Edit/1
+Content-Type: application/x-www-form-urlencoded
+
+Name=NewCityName&StateID=2
+
+#### Delete city
+DELETE {{Bhatkanti_HostAddress}}/Cities/DeleteConfirmed/1
+
+### States API
+
+#### Get all states
+GET {{Bhatkanti_HostAddress}}/States
+Accept: application/json
+
+#### Get state by ID
+GET {{Bhatkanti_HostAddress}}/States/Details/1
+Accept: application/json
+
+#### Create new state
+POST {{Bhatkanti_HostAddress}}/States/Create
+Content-Type: application/x-www-form-urlencoded
+
+Name=StateName&Country=CountryName
+
+#### Edit state
+PUT {{Bhatkanti_HostAddress}}/States/Edit/1
+Content-Type: application/x-www-form-urlencoded
+
+Name=NewStateName&Country=NewCountryName
+
+#### Delete state
+DELETE {{Bhatkanti_HostAddress}}/States/DeleteConfirmed/1
+
+### Places API
+
+#### Get all places
+GET {{Bhatkanti_HostAddress}}/Places
+Accept: application/json
+
+#### Get place by ID
+GET {{Bhatkanti_HostAddress}}/Places/Details/1
+Accept: application/json
+
+#### Create new place
+POST {{Bhatkanti_HostAddress}}/Places/Create
+Content-Type: application/x-www-form-urlencoded
+
+Name=PlaceName&CityID=1
+
+#### Edit place
+PUT {{Bhatkanti_HostAddress}}/Places/Edit/1
+Content-Type: application/x-www-form-urlencoded
+
+Name=NewPlaceName&CityID=2
+
+#### Delete place
+DELETE {{Bhatkanti_HostAddress}}/Places/DeleteConfirmed/1
+
+### Images API
+
+#### Get all images
+GET {{Bhatkanti_HostAddress}}/Images
+Accept: application/json
+
+#### Get image by ID
+GET {{Bhatkanti_HostAddress}}/Images/Details/1
+Accept: application/json
+
+#### Create new image
+POST {{Bhatkanti_HostAddress}}/Images/Create
+Content-Type: application/x-www-form-urlencoded
+
+Url=imageurl.jpg&Description=Image description
+
+#### Edit image
+PUT {{Bhatkanti_HostAddress}}/Images/Edit/1
+Content-Type: application/x-www-form-urlencoded
+
+Url=newimageurl.jpg&Description=New description
+
+#### Delete image
+DELETE {{Bhatkanti_HostAddress}}/Images/DeleteConfirmed/1
+
+### Place Feedbacks API
+
+#### Get all place feedbacks
+GET {{Bhatkanti_HostAddress}}/PlaceFeedbacks
+Accept: application/json
+
+#### Get place feedback by ID
+GET {{Bhatkanti_HostAddress}}/PlaceFeedbacks/Details/1
+Accept: application/json
+
+#### Create new place feedback
+POST {{Bhatkanti_HostAddress}}/PlaceFeedbacks/Create
+Content-Type: application/x-www-form-urlencoded
+
+PlaceID=1&UserID=1&Feedback=Great place!
+
+#### Edit place feedback
+PUT {{Bhatkanti_HostAddress}}/PlaceFeedbacks/Edit/1
+Content-Type: application/x-www-form-urlencoded
+
+PlaceID=2&UserID=2&Feedback=Not so great.
+
+#### Delete place feedback
+DELETE {{Bhatkanti_HostAddress}}/PlaceFeedbacks/DeleteConfirmed/1
+
+### Booking Payment Details API
+
+#### Get all booking payment details
+GET {{Bhatkanti_HostAddress}}/BookingPaymentDetails
+Accept: application/json
+
+#### Get booking payment detail by ID
+GET {{Bhatkanti_HostAddress}}/BookingPaymentDetails/Details/1
+Accept: application/json
+
+#### Create new booking payment detail
+POST {{Bhatkanti_HostAddress}}/BookingPaymentDetails/Create
+Content-Type: application/x-www-form-urlencoded
+
+BookingID=1&Amount=100&PaymentMethod=CreditCard
+
+#### Edit booking payment detail
+PUT {{Bhatkanti_HostAddress}}/BookingPaymentDetails/Edit/1
+Content-Type: application/x-www-form-urlencoded
+
+BookingID=1&Amount=150&PaymentMethod=DebitCard
+
+#### Delete booking payment detail
+DELETE {{Bhatkanti_HostAddress}}/BookingPaymentDetails/DeleteConfirmed/1
+
+### Booking API
+
+#### Get all bookings
+GET {{Bhatkanti_HostAddress}}/Booking
+Accept: application/json
+
+#### Get booking by ID
+GET {{Bhatkanti_HostAddress}}/Booking/Details/1
+Accept: application/json
+
+#### Create new booking
+POST {{Bhatkanti_HostAddress}}/Booking/Create
+Content-Type: application/x-www-form-urlencoded
+
+UserID=1&PlaceID=1&GuideID=1&BookingDate=2024-08-01
+
+#### Edit booking
+PUT {{Bhatkanti_HostAddress}}/Booking/Edit/1
+Content-Type: application/x-www-form-urlencoded
+
+UserID=2&PlaceID=2&GuideID=2&BookingDate=2024-08-15
+
+#### Delete booking
+DELETE {{Bhatkanti_HostAddress}}/Booking/DeleteConfirmed/1
+
+### Wishlist API
+
+#### Get all wishlists
+GET {{Bhatkanti_HostAddress}}/Wishlist
+Accept: application/json
+
+#### Get wishlist by ID
+GET {{Bhatkanti_HostAddress}}/Wishlist/Details/1
+Accept: application/json
+
+#### Create new wishlist
+POST {{Bhatkanti_HostAddress}}/Wishlist/Create
+Content-Type: application/x-www-form-urlencoded
+
+UserID=1&PlaceID=1
+
+#### Edit wishlist
+PUT {{Bhatkanti_HostAddress}}/Wishlist/Edit/1
+Content-Type: application/x-www-form-urlencoded
+
+UserID=1&PlaceID=2
+
+#### Delete wishlist
+DELETE {{Bhatkanti_HostAddress}}/Wishlist/DeleteConfirmed/1
