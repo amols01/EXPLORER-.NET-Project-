@@ -1,12 +1,12 @@
 ﻿using Bhatkanti.Models;
 using Bhatkanti.Services;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace Bhatkanti.Controllers
 {
@@ -15,10 +15,7 @@ namespace Bhatkanti.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _usersService;
-
         private readonly IMemoryCache _cache;
-
-        
 
         public UserController(IUserService usersService, IMemoryCache cache)
         {
@@ -27,9 +24,14 @@ namespace Bhatkanti.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(Users user)
+        public async Task<IActionResult> Register([FromBody] Users user)
         {
-            // Check if required fields are present
+            // Validate model state based on data annotations
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             if (user.Role_ID <= 0)
             {
                 return BadRequest("The Role field is required.");
@@ -40,35 +42,39 @@ namespace Bhatkanti.Controllers
                 return BadRequest("User with this email already exists.");
             }
 
-            // Initialize collections if not provided
-            user.Guides ??= new List<Guide>();
-            user.Bills ??= new List<Bill>();
-            user.Wishlists ??= new List<Wishlist>();
-            user.FeedbackImages ??= new List<Feedback_Image>();
-            user.PlaceFeedbacks ??= new List<Place_Feedbacks>();
-            user.Helps ??= new List<Help>();
-            user.Images ??= new List<Images>();
-
             var createdUser = await _usersService.CreateUserAsync(user);
-            return CreatedAtAction(nameof(GetUser), new { id = createdUser.User_ID }, createdUser);
+
+            // Manually build the URL for the created resource
+            var url = Url.Action(nameof(GetUser), new { userId = createdUser.User_ID });
+
+            return Created(url, createdUser);
         }
 
-        // POST: api/user/login
-       
-
-        // GET: api/user
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Users>>> GetUsers()
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetUser(int userId)
         {
-            var users = await _usersService.GetAllUsersAsync();
-            return Ok(users);
+            var cacheKey = $"User_{userId}";
+            if (_cache.TryGetValue(cacheKey, out Users user))
+            {
+                return Ok(user);
+            }
+
+            user = await _usersService.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            _cache.Set(cacheKey, user, TimeSpan.FromMinutes(30));
+            return Ok(user);
         }
+
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
         {
-            if (loginRequest == null)
+            if (loginRequest == null || !ModelState.IsValid)
             {
-                return BadRequest("Login request is required.");
+                return BadRequest("Invalid login request.");
             }
 
             var user = await _usersService.AuthenticateAsync(loginRequest.Email, loginRequest.Password);
@@ -77,88 +83,68 @@ namespace Bhatkanti.Controllers
                 return Unauthorized("Invalid email or password.");
             }
 
-            var claims = new[]
+            var claims = new List<Claim>
             {
-        new Claim(ClaimTypes.NameIdentifier, user.User_ID.ToString()), // ID claim
-        new Claim(ClaimTypes.Email, user.Email ?? string.Empty) // Email claim
-    };
+                new Claim(ClaimTypes.NameIdentifier, user.User_ID.ToString()),
+                new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
+                new Claim(ClaimTypes.Role, user.Role_ID.ToString()) // Assuming Role_ID is mapped to roles
+            };
 
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var claimsIdentity = new ClaimsIdentity(claims, "Login");
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-            // Set authentication cookie
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+            await HttpContext.SignInAsync(claimsPrincipal);
 
-            // Cache user details
             var cacheKey = $"User_{user.User_ID}";
-            _cache.Set(cacheKey, user, TimeSpan.FromMinutes(30)); // Cache for 30 minutes
+            _cache.Set(cacheKey, user, TimeSpan.FromMinutes(30));
 
             return Ok(new { Message = "Login successful" });
         }
-        // GET: api/user/{id}
-        /*  [HttpGet("{id}")]
-          public async Task<ActionResult<Users>> GetUser(int id)
-          {
-              var user = await _usersService.GetUserByIdAsync(id);
-              if (user == null)
-              {
-                  return NotFound();
-              }
-              return Ok(user);
-          } */
 
-        [HttpGet("user/{userId}")]
-        public IActionResult GetUser(int userId)
-        {
-            var cacheKey = $"User_{userId}";
-            if (_cache.TryGetValue(cacheKey, out Users user))
-            {
-                return Ok(user);
-            }
-            else
-            {
-                return NotFound("User not found in cache.");
-            }
-        }
-
-        // PUT: api/user/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] Users user)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             if (id != user.User_ID)
             {
                 return BadRequest("User ID mismatch.");
             }
 
-            var updated = await _usersService.UpdateUserAsync(user);
-            if (updated == null)
+            var updatedUser = await _usersService.UpdateUserAsync(user);
+            if (updatedUser == null)
             {
-                return NotFound();
+                return NotFound("User not found.");
             }
 
             return Ok(new { Message = "User updated successfully." });
         }
 
-
-        // DELETE: api/user/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _usersService.GetUserByIdAsync(id);
             if (user == null)
             {
-                return NotFound();
+                return NotFound("User not found.");
             }
 
             await _usersService.DeleteUserAsync(id);
-
             return Ok(new { Message = "User deleted successfully." });
         }
     }
 
     public class LoginRequest
     {
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
+
+        [Required]
+        [StringLength(255, MinimumLength = 6)]
         public string Password { get; set; }
     }
 }

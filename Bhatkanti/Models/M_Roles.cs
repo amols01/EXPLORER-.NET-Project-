@@ -12,5 +12,7 @@ namespace Bhatkanti.Models
         [Required]
         [StringLength(50)]
         public string Role { get; set; }
+
+        public ICollection<Users> Users { get; set; } = new List<Users>();
     }
 }

@@ -12,6 +12,8 @@ namespace Bhatkanti.Models
         [ForeignKey("Users")]
         public int? User_ID { get; set; }
 
+        
+
         [Required]
         [StringLength(12)]
         public string Aadhar_Number { get; set; }
@@ -28,6 +30,8 @@ namespace Bhatkanti.Models
         public string Address { get; set; }
 
         // Navigation Properties
-        public Users User { get; set; }
+        public Users? User { get; set; }
+
+       
     }
 }

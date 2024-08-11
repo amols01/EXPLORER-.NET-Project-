@@ -14,7 +14,7 @@ namespace Bhatkanti.Models
         [ForeignKey("Booking")]
         public int? Booking_ID { get; set; }
 
-        [Required]
+        [Required] 
         public DateTime Transaction_Date { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]

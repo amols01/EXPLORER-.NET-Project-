@@ -4,6 +4,7 @@ namespace Bhatkanti.Services
 {
     public interface IUserService
     {
+        Task<Guide> AuthenticateGuideAsync(string email, string password);
         Task<IEnumerable<Users>> GetAllUsersAsync();
         Task<Users> GetUserByIdAsync(int id);
         Task<Users> CreateUserAsync(Users user);

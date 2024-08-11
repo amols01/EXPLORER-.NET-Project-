@@ -147,23 +147,35 @@ namespace Bhatkanti.Models
                 .WithMany() // Image does not have a navigation property back to Place_Images
                 .HasForeignKey(pi => pi.Image_ID)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<User_Guide_Bookings>()
+       .HasOne(ugb => ugb.Guide)
+       .WithMany() // Or use WithMany(g => g.UserGuideBookings) if you have a navigation property
+       .HasForeignKey(ugb => ugb.Guide_ID)
+       .OnDelete(DeleteBehavior.Restrict); // or another delete behavior
 
-          //  base.OnModelCreating(modelBuilder);
-
-         /*   modelBuilder.Entity<Users>()
-                .HasOne(u => u.Roles)
-                .WithMany()
-                .HasForeignKey(u => u.Role_ID)
-                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<User_Guide_Bookings>()
+                .HasOne(ugb => ugb.User)
+                .WithMany() // Or use WithMany(u => u.UserGuideBookings) if you have a navigation property
+                .HasForeignKey(ugb => ugb.User_ID)
+                .OnDelete(DeleteBehavior.Restrict); // or another delete behavior
 
             base.OnModelCreating(modelBuilder);
+            //  base.OnModelCreating(modelBuilder);
 
-            // Configure Users entity
-            modelBuilder.Entity<Users>()
-                .HasOne(u => u.Roles)
-                .WithMany() // M_Roles does not have a navigation property back to Users
-                .HasForeignKey(u => u.Role_ID)
-                .OnDelete(DeleteBehavior.Restrict);*/
+            /*   modelBuilder.Entity<Users>()
+                   .HasOne(u => u.Roles)
+                   .WithMany()
+                   .HasForeignKey(u => u.Role_ID)
+                   .OnDelete(DeleteBehavior.Restrict);
+
+               base.OnModelCreating(modelBuilder);
+
+               // Configure Users entity
+               modelBuilder.Entity<Users>()
+                   .HasOne(u => u.Roles)
+                   .WithMany() // M_Roles does not have a navigation property back to Users
+                   .HasForeignKey(u => u.Role_ID)
+                   .OnDelete(DeleteBehavior.Restrict);*/
         }
 
     }

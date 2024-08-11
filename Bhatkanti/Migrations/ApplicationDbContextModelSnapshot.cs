@@ -36,6 +36,9 @@ namespace Bhatkanti.Migrations
                     b.Property<decimal>("GST")
                         .HasColumnType("decimal(65,30)");
 
+                    b.Property<int?>("Guide_ID")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Platform_Fee")
                         .HasColumnType("decimal(65,30)");
 
@@ -51,12 +54,9 @@ namespace Bhatkanti.Migrations
                     b.Property<decimal>("Total_Guide_Fee")
                         .HasColumnType("decimal(65,30)");
 
-                    b.Property<int?>("UsersUser_ID")
-                        .HasColumnType("int");
-
                     b.HasKey("Bill_ID");
 
-                    b.HasIndex("UsersUser_ID");
+                    b.HasIndex("Guide_ID");
 
                     b.ToTable("bill");
                 });
@@ -169,16 +169,11 @@ namespace Bhatkanti.Migrations
                     b.Property<int>("Place_Feedback_ID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsersUser_ID")
-                        .HasColumnType("int");
-
                     b.HasKey("Feedback_Image_Id");
 
                     b.HasIndex("Image_ID");
 
                     b.HasIndex("Place_Feedback_ID");
-
-                    b.HasIndex("UsersUser_ID");
 
                     b.ToTable("place_feedback_images");
                 });
@@ -214,14 +209,9 @@ namespace Bhatkanti.Migrations
                     b.Property<int?>("User_ID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsersUser_ID")
-                        .HasColumnType("int");
-
                     b.HasKey("Guide_ID");
 
                     b.HasIndex("User_ID");
-
-                    b.HasIndex("UsersUser_ID");
 
                     b.ToTable("guide");
                 });
@@ -320,14 +310,9 @@ namespace Bhatkanti.Migrations
                     b.Property<int?>("User_ID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsersUser_ID")
-                        .HasColumnType("int");
-
                     b.HasKey("Help_ID");
 
                     b.HasIndex("User_ID");
-
-                    b.HasIndex("UsersUser_ID");
 
                     b.ToTable("help");
                 });
@@ -358,14 +343,9 @@ namespace Bhatkanti.Migrations
                     b.Property<int?>("User_ID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsersUser_ID")
-                        .HasColumnType("int");
-
                     b.HasKey("Image_ID");
 
                     b.HasIndex("User_ID");
-
-                    b.HasIndex("UsersUser_ID");
 
                     b.ToTable("images");
                 });
@@ -470,16 +450,11 @@ namespace Bhatkanti.Migrations
                     b.Property<int?>("User_ID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsersUser_ID")
-                        .HasColumnType("int");
-
                     b.HasKey("Place_Feedback_ID");
 
                     b.HasIndex("Place_ID");
 
                     b.HasIndex("User_ID");
-
-                    b.HasIndex("UsersUser_ID");
 
                     b.ToTable("place_feedback");
                 });
@@ -524,6 +499,9 @@ namespace Bhatkanti.Migrations
                     b.Property<DateTime>("Date_To")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int?>("Guide_ID")
+                        .HasColumnType("int");
+
                     b.Property<TimeSpan>("Time_From")
                         .HasColumnType("time(6)");
 
@@ -543,6 +521,8 @@ namespace Bhatkanti.Migrations
 
                     b.HasIndex("Bill_ID");
 
+                    b.HasIndex("Guide_ID");
+
                     b.HasIndex("User_ID");
 
                     b.ToTable("user_guide_bookings");
@@ -561,7 +541,13 @@ namespace Bhatkanti.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
+                    b.Property<int?>("Guide_ID")
+                        .HasColumnType("int");
+
                     b.Property<int?>("Image_ID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("M_RolesRole_ID")
                         .HasColumnType("int");
 
                     b.Property<string>("Password")
@@ -586,7 +572,16 @@ namespace Bhatkanti.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlComputedColumn(b.Property<DateTime>("Timestamp"));
 
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
                     b.HasKey("User_ID");
+
+                    b.HasIndex("Guide_ID");
+
+                    b.HasIndex("M_RolesRole_ID");
 
                     b.ToTable("users");
                 });
@@ -611,9 +606,6 @@ namespace Bhatkanti.Migrations
                     b.Property<int?>("User_ID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsersUser_ID")
-                        .HasColumnType("int");
-
                     b.HasKey("Wishlist_ID");
 
                     b.HasIndex("City_ID");
@@ -622,16 +614,16 @@ namespace Bhatkanti.Migrations
 
                     b.HasIndex("User_ID");
 
-                    b.HasIndex("UsersUser_ID");
-
                     b.ToTable("wishlist");
                 });
 
             modelBuilder.Entity("Bhatkanti.Models.Bill", b =>
                 {
-                    b.HasOne("Bhatkanti.Models.Users", null)
-                        .WithMany("Bills")
-                        .HasForeignKey("UsersUser_ID");
+                    b.HasOne("Bhatkanti.Models.Guide", "Guide")
+                        .WithMany()
+                        .HasForeignKey("Guide_ID");
+
+                    b.Navigation("Guide");
                 });
 
             modelBuilder.Entity("Bhatkanti.Models.Booking_Payment_Details", b =>
@@ -690,10 +682,6 @@ namespace Bhatkanti.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Bhatkanti.Models.Users", null)
-                        .WithMany("FeedbackImages")
-                        .HasForeignKey("UsersUser_ID");
-
                     b.Navigation("Image");
 
                     b.Navigation("Place_Feedback");
@@ -705,10 +693,6 @@ namespace Bhatkanti.Migrations
                         .WithMany()
                         .HasForeignKey("User_ID")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Bhatkanti.Models.Users", null)
-                        .WithMany("Guides")
-                        .HasForeignKey("UsersUser_ID");
 
                     b.Navigation("User");
                 });
@@ -751,10 +735,6 @@ namespace Bhatkanti.Migrations
                         .HasForeignKey("User_ID")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Bhatkanti.Models.Users", null)
-                        .WithMany("Helps")
-                        .HasForeignKey("UsersUser_ID");
-
                     b.Navigation("User");
                 });
 
@@ -764,10 +744,6 @@ namespace Bhatkanti.Migrations
                         .WithMany()
                         .HasForeignKey("User_ID")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Bhatkanti.Models.Users", null)
-                        .WithMany("Images")
-                        .HasForeignKey("UsersUser_ID");
 
                     b.Navigation("User");
                 });
@@ -791,10 +767,6 @@ namespace Bhatkanti.Migrations
                         .WithMany()
                         .HasForeignKey("User_ID")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Bhatkanti.Models.Users", null)
-                        .WithMany("PlaceFeedbacks")
-                        .HasForeignKey("UsersUser_ID");
 
                     b.Navigation("Place");
 
@@ -827,6 +799,11 @@ namespace Bhatkanti.Migrations
                         .HasForeignKey("Bill_ID")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("Bhatkanti.Models.Guide", "Guide")
+                        .WithMany()
+                        .HasForeignKey("Guide_ID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Bhatkanti.Models.Users", "User")
                         .WithMany()
                         .HasForeignKey("User_ID")
@@ -834,7 +811,22 @@ namespace Bhatkanti.Migrations
 
                     b.Navigation("Bill");
 
+                    b.Navigation("Guide");
+
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Bhatkanti.Models.Users", b =>
+                {
+                    b.HasOne("Bhatkanti.Models.Guide", "Guide")
+                        .WithMany()
+                        .HasForeignKey("Guide_ID");
+
+                    b.HasOne("Bhatkanti.Models.M_Roles", null)
+                        .WithMany("Users")
+                        .HasForeignKey("M_RolesRole_ID");
+
+                    b.Navigation("Guide");
                 });
 
             modelBuilder.Entity("Bhatkanti.Models.Wishlist", b =>
@@ -854,10 +846,6 @@ namespace Bhatkanti.Migrations
                         .HasForeignKey("User_ID")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Bhatkanti.Models.Users", null)
-                        .WithMany("Wishlists")
-                        .HasForeignKey("UsersUser_ID");
-
                     b.Navigation("City");
 
                     b.Navigation("Place");
@@ -870,21 +858,9 @@ namespace Bhatkanti.Migrations
                     b.Navigation("Bookings");
                 });
 
-            modelBuilder.Entity("Bhatkanti.Models.Users", b =>
+            modelBuilder.Entity("Bhatkanti.Models.M_Roles", b =>
                 {
-                    b.Navigation("Bills");
-
-                    b.Navigation("FeedbackImages");
-
-                    b.Navigation("Guides");
-
-                    b.Navigation("Helps");
-
-                    b.Navigation("Images");
-
-                    b.Navigation("PlaceFeedbacks");
-
-                    b.Navigation("Wishlists");
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

@@ -27,6 +27,8 @@ namespace Bhatkanti.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime Timestamp { get; set; }
 
+        [ForeignKey("Guide_ID")]
+        public Guide? Guide { get; set; }
         // Navigation Properties
         public ICollection<User_Guide_Bookings> Bookings { get; set; }
     }

@@ -276,3 +276,6 @@ C:\Users\SUMIT NIKAM\Desktop\Major Project\Bhatkanti-The-Soul-Explorer\Bhatkanti
 C:\Users\SUMIT NIKAM\Desktop\Major Project\Bhatkanti-The-Soul-Explorer\Bhatkanti\Bhatkanti\obj\Debug\net8.0\Bhatkanti.pdb
 C:\Users\SUMIT NIKAM\Desktop\Major Project\Bhatkanti-The-Soul-Explorer\Bhatkanti\Bhatkanti\obj\Debug\net8.0\Bhatkanti.genruntimeconfig.cache
 C:\Users\SUMIT NIKAM\Desktop\Major Project\Bhatkanti-The-Soul-Explorer\Bhatkanti\Bhatkanti\obj\Debug\net8.0\ref\Bhatkanti.dll
+C:\Users\SUMIT NIKAM\Desktop\Major Project\Bhatkanti-The-Soul-Explorer\Bhatkanti\Bhatkanti\obj\Debug\net8.0\Bhatkanti.sourcelink.json
+C:\Users\SUMIT NIKAM\Desktop\Major Project\Bhatkanti-The-Soul-Explorer\Bhatkanti\Bhatkanti\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\SUMIT NIKAM\Desktop\Major Project\Bhatkanti-The-Soul-Explorer\Bhatkanti\Bhatkanti\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

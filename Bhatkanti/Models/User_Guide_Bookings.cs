@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace Bhatkanti.Models
 {
@@ -23,6 +24,11 @@ namespace Bhatkanti.Models
         // Foreign key for Bill
         
         public int? Bill_ID { get; set; }
+
+        [ForeignKey("Guides")]
+        public int? Guide_ID { get; set; }
+
+        public Guide Guide { get; set; }
 
         // Navigation Properties
         public Users User { get; set; }

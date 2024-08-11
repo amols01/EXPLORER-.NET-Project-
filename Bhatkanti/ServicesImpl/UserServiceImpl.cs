@@ -19,6 +19,19 @@ namespace Bhatkanti.ServicesImpl
             return await _context.Users.ToListAsync(); /*ToListAsync();*/
         }
 
+        public async Task<Guide> AuthenticateGuideAsync(string email, string password)
+        {
+            // Retrieve user from database
+            var user = await _context.Users
+                .Include(u => u.Guide).
+                Include(u => u.Role_ID) 
+                .FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
+                return null;
+
+            return user.Guide;
+        }
         public async Task<Users> GetUserByIdAsync(int id)
         {
             return await _context.Users.FindAsync(id);

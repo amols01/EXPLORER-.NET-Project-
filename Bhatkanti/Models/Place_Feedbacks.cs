@@ -21,7 +21,7 @@ namespace Bhatkanti.Models
         [Required]
         public string Place_Feedback { get; set; }
 
-        public int? Place_Rating { get; set; }
+        public int? Place_Rating { get; set; } 
 
         // Navigation Properties
         public Users User { get; set; }
