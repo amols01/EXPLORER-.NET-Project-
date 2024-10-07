@@ -1,0 +1,123 @@
+/* General Page Styling */
+.traveler-page {
+    padding: 20px;
+    background-color: #f0f4f8; /* Light background color for the entire page */
+}
+
+/* Upper Flex Section Styling */
+.upper-flex-section {
+    display: flex;
+    width: 100%; /* Ensure the section takes the full width of its container */
+    margin-bottom: 40px; /* Space between this section and the feedback cards */
+    background-image: url('https://img.freepik.com/premium-photo/illustration-background-about-tour-traveling_744040-7868.jpg?w=1380'); /* Set your image as background */
+    background-size: cover; /* Ensure the image covers the entire section */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    border-radius: 8px; /* Optional: rounded corners for the section */
+    padding: 20px; /* Add padding to keep text content within the section */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+    height: 500px; /* Set the height of the section */
+    position: relative; /* Position relative for absolute positioning of the right content */
+}
+
+.upper-flex {
+    flex: 1;
+    color: white; /* Set text color to white for better contrast against the background image */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+}
+
+.upper-flex-right {
+    width: 300px; /* Set width for the right section */
+    color:black; /* Text color for the right section */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically within the right section */
+    align-items: flex-start; /* Align items to the left */
+    position: absolute; /* Position absolute to align with right side */
+    right: 140px; /* Distance from the right edge */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust vertical centering */
+}
+
+.guide-heading {
+    margin-bottom: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.travel-info {
+    font-size: 18px;
+    margin-bottom: 20px;
+    text-align: left; /* Align text to the left */
+}
+
+.booking-button {
+    padding: 10px 20px;
+    background-color: rgba(0, 123, 255, 0.8); /* Semi-transparent button */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: flex-start; /* Align button to the left */
+}
+
+.booking-button:hover {
+    background-color: rgba(0, 86, 179, 0.8); /* Darker semi-transparent color on hover */
+}
+
+/* Feedback Cards Styling */
+
+.heading-traveler-page{
+    text-align: center;
+    color: rgb(89, 64, 231);
+}
+
+.feedback-cards-section {
+    margin-top: 40px;
+}
+
+.feedback-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Space between feedback cards */
+}
+
+.feedback-card {
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background for cards */
+    border-radius: 8px; /* Rounded corners for cards */
+    padding: 15px; /* Smaller padding for cards */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow around cards */
+    width: 20%;
+    height: auto;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+    background-size: cover; /* Cover the entire card */
+    margin-bottom: 20px; /* Space below each feedback card */
+}
+
+.feedback-card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+.feedback-card img {
+    width: 100px; /* Medium size for images */
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+}
+
+.feedback-card h3 {
+    margin: 10px 0;
+    color: #333; /* Dark color for the name */
+}
+
+.feedback-card p {
+    margin: 5px 0;
+    color: #555; /* Slightly lighter color for text */
+}
