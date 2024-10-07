@@ -1,0 +1,19 @@
+.container {
+    padding: 20px;
+  }
+  
+  .dropdownContainer {
+    margin-bottom: 20px;
+  }
+  
+  .cardsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .card {
+    max-width: 300px;
+    margin: auto;
+  }
+  

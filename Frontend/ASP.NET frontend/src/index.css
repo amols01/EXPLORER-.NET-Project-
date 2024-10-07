@@ -1,0 +1,56 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+#root {
+  flex: 1; /* Ensure the root container takes up all available space */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure the root container covers full viewport height */
+}
+
+.footer {
+  background-color: #1E88E5;
+  padding: 20px 0;
+  box-shadow: 12px 12px 12px rgba(0,0,0,0.1);
+  color: white;
+  margin-top: auto; /* Pushes the footer to the bottom of the page */
+}
+
+.footer-title {
+  font-weight: bold;
+  color: white;
+}
+
+.footer-icons {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.footer-icon {
+  margin: 0 10px;
+  color: white;
+}
+
+.footer-icon:hover {
+  color: #FFC107; /* Optional: Change color on hover */
+}
+
